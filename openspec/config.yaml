@@ -1,0 +1,36 @@
+schema: spec-driven
+
+context: |
+  # flutter_framework_finance_ui — 金融 UI 扩展层
+
+  ## 模块定位
+  金融 UI 扩展层，位于 flutter_framework_ui（通用 UI）与业务项目之间。
+  提供 K 线图渲染、金融语义颜色 Token 和技术指标计算引擎。
+
+  ## 技术栈
+  - 语言: Dart 3.x（严格 null safety）
+  - UI框架: Flutter 3.x（CustomPainter 渲染）
+  - 指标计算: dart:isolate（通过 compute()）
+  - 测试: flutter_test + mocktail
+
+  ## 核心职责
+  - FinanceColorTokens：金融语义颜色 ThemeExtension
+  - KChartWidget：高性能 K 线图 Widget
+  - IndicatorCalculator：技术指标引擎（MA/EMA/BOLL/MACD/KDJ/RSI/WR）
+
+  ## 依赖关系
+  flutter_framework_ui  ←  flutter_framework_finance_ui  ←  业务项目
+
+  ## 关键约定
+  - KLineIndicators 使用固定字段（非 Map），避免渲染循环装箱开销
+  - 全量计算走 compute() Isolate，增量更新（updateLast）在主线程
+  - KChartStyle 通过 fromTokens() 从框架主题自动映射，零硬编码颜色
+  - shouldRepaint 通过 Dart record repaintKey 比较，避免无效重绘
+
+rules:
+  proposal:
+    - 新增指标必须说明计算算法和数据字段命名
+    - 涉及渲染性能变更必须说明 repaintKey 影响
+  tasks:
+    - 每个新指标必须包含边界值（空数据、数据不足）单元测试
+    - 新增颜色 Token 必须同时在 light 和 dark 预设中赋值

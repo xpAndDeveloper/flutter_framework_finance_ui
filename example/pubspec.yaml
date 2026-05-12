@@ -1,0 +1,25 @@
+name: flutter_framework_finance_ui_example
+description: "flutter_framework_finance_ui 示例应用 — K 线图功能演示。"
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.8.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_framework_ui:
+    path: ../../flutter_framework_ui
+  flutter_framework_finance_ui:
+    path: ..
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
